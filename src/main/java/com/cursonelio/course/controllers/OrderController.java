@@ -1,4 +1,4 @@
-package com.cursonelio.course.resources;
+package com.cursonelio.course.controllers;
 
 
 import com.cursonelio.course.entities.Order;
@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/orders")
-public class OrderResources {
+public class OrderController {
 
     @Autowired
     private OrderService service;
