@@ -1,14 +1,8 @@
 package com.cursonelio.course.config;
 
-import com.cursonelio.course.entities.Category;
-import com.cursonelio.course.entities.Order;
-import com.cursonelio.course.entities.Product;
-import com.cursonelio.course.entities.User;
+import com.cursonelio.course.entities.*;
 import com.cursonelio.course.entities.enums.OrderStatus;
-import com.cursonelio.course.repositories.CategoryRepository;
-import com.cursonelio.course.repositories.OrderRepository;
-import com.cursonelio.course.repositories.ProductRepository;
-import com.cursonelio.course.repositories.UserRepository;
+import com.cursonelio.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +23,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -60,6 +56,12 @@ public class TestConfig implements CommandLineRunner {
         p4.getCategories().add(cat3);
         p5.getCategories().add(cat2);
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+
+        OrderItem o11 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem o12 = new OrderItem(o1, p3, 1, p4.getPrice());
+        OrderItem o13 = new OrderItem(o2, p3, 2, p1.getPrice());
+        OrderItem o14 = new OrderItem(o3, p5, 2, p5.getPrice());
+        orderItemRepository.saveAll(Arrays.asList(o11,o12,o13,o14));
 
     }
 
