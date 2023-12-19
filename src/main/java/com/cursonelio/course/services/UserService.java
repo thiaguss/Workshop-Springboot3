@@ -4,6 +4,7 @@ import com.cursonelio.course.entities.User;
 import com.cursonelio.course.repositories.UserRepository;
 import com.cursonelio.course.services.exceptions.ControllerNotFoundException;
 import com.cursonelio.course.services.exceptions.DatabaseException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -41,9 +42,14 @@ public class UserService {
     }
 
     public User update(Long id, User obj){
-        User entity = repository.getReferenceById(id);
-        updateData(entity, obj);
-        return repository.save(entity);
+        try {
+            User entity = repository.getReferenceById(id);
+            updateData(entity, obj);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e){
+            throw new ControllerNotFoundException(id);
+        }
+
     }
 
     private void updateData(User entity, User obj) {
